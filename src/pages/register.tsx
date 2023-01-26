@@ -1,5 +1,7 @@
-import Register from "@/components/Signup";
+import { NextPage } from "next";
 
-const RegisterPage = Register;
+import Register from "@/components/register";
+
+const RegisterPage : NextPage = Register;
 
 export default RegisterPage;
