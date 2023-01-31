@@ -13,13 +13,10 @@ export const params = z.object({
 });
 
 export const registerSchema = z.object({
-  firstName: z.string({
-    required_error: "firstName is required field!",
+  name: z.string({
+    required_error: "name is required field!",
   }),
-  middleName: z.string(),
-  lastName: z.string({
-    required_error: "lastName is required field!",
-  }),
+  image: z.string().optional(),
   email: z
     .string({
       required_error: "email is required field!",
@@ -31,16 +28,14 @@ export const registerSchema = z.object({
     })
     .max(12)
     .min(6),
-  address: Address,
 });
 
 export const updateProfileSchema = z.object({
   params,
   body: z
     .object({
-      firstName: z.string(),
-      lastName: z.string(),
-      address: Address,
+      name: z.string(),
+      image: z.string(),
     })
     .partial(),
 });

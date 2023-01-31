@@ -1,37 +1,43 @@
 import { useState, useRef } from "react";
 import Link from "next/link";
-// import LandingIntro from "./LandingIntro";
 import ErrorText from "@/components/Typography/ErrorText";
 import InputText from "@/components/input/InputText";
 import LandingIntro from "@/components/LandingIntro";
+// import Message from "@/components/Message";
+
+import { trpc } from "@/utils/trpc";
 
 function Register() {
   const INITIAL_REGISTER_OBJ = {
     name: "",
     password: "",
-    emailId: "",
+    email: "",
   };
 
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [registerObj, setRegisterObj] = useState(INITIAL_REGISTER_OBJ);
 
+  const t = trpc.register.useMutation();
+  const { isLoading, isSuccess, isError, error } = t;
+
   const submitForm = (e: any) => {
     e.preventDefault();
     setErrorMessage("");
 
     if (registerObj.name.trim() === "")
-      return setErrorMessage("Name is required! (use any value)");
-    if (registerObj.emailId.trim() === "")
-      return setErrorMessage("Email Id is required! (use any value)");
+      return setErrorMessage("Name is required!");
+    if (registerObj.email.trim() === "")
+      return setErrorMessage("Email Id is required!");
     if (registerObj.password.trim() === "")
-      return setErrorMessage("Password is required! (use any value)");
+      return setErrorMessage("Password is required!");
     else {
-      setLoading(true);
-      // Call API to check user credentials and save token in localstorage
-      localStorage.setItem("token", "DumyTokenHere");
-      setLoading(false);
-      window.location.href = "/app/welcome";
+      // setLoading(true);
+
+      t.mutate({ ...registerObj });
+
+      // setLoading(false);
+      // window.location.href = "/app/welcome";
     }
   };
 
@@ -39,6 +45,10 @@ function Register() {
     setErrorMessage("");
     setRegisterObj({ ...registerObj, [updateType]: value });
   };
+
+  // if (isSuccess) Message.success(t.data.message);
+
+  // if (isError) Message.error(error.message);
 
   return (
     <div className="min-h-screen bg-base-200 flex items-center">
@@ -62,8 +72,8 @@ function Register() {
                 />
 
                 <InputText
-                  defaultValue={registerObj.emailId}
-                  updateType="emailId"
+                  defaultValue={registerObj.email}
+                  updateType="email"
                   containerStyle="mt-4"
                   labelTitle="Email Id"
                   updateFormValue={updateFormValue}
@@ -79,11 +89,11 @@ function Register() {
                 />
               </div>
 
-              <ErrorText styleClass="mt-8">{errorMessage}</ErrorText>
+              <ErrorText styleclassName="mt-8">{errorMessage}</ErrorText>
               <button
                 type="submit"
                 className={
-                  "btn mt-2 w-full btn-primary" + (loading ? " loading" : "")
+                  "btn mt-2 w-full btn-primary" + (isLoading ? " loading" : "")
                 }
               >
                 Register

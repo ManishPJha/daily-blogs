@@ -25,10 +25,7 @@ model User {
   email              String    @unique
   password           String
   role               Role?     @default(user)
-  firstName          String
-  middleName         String?
-  lastName           String
-  address            Address?
+  name               String
   posts              Posts[]
   requestToken       String?
   requestTokenExpiry DateTime?
@@ -39,10 +36,4 @@ model User {
 enum Role {
   user
   admin
-}
-
-type Address {
-  pincode Int?
-  street  String?
-  address String?
 }

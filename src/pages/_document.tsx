@@ -1,4 +1,3 @@
-// import Navbar from "@/components/header/navbar";
 import { Html, Head, Main, NextScript } from "next/document";
 import React from "react";
 
@@ -11,11 +10,13 @@ const Document = () => {
           rel="stylesheet"
         ></link>
       </Head>
-      {/* <Navbar /> */}
-      <Main />
+      <body>
+        <Main />
+      </body>
       <NextScript />
       <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.3/flowbite.min.js"></script>
-      <div id="register-modal"></div>
+      <div id="toast-message"></div>
+      {/* <div id="register-modal"></div> */}
     </Html>
   );
 };

@@ -1,13 +1,14 @@
-import { procedure, router } from "@/server/trpc";
-import { authRoutes } from "@/server/routers";
+import { t } from "@/server/createRoutes";
+import { authRoutes } from "@/server/routers/auth.routes";
 
-export const appRouter = router({
-  welcome: procedure.query((req) => {
+const publicRoutes = t.router({
+  welcome: t.procedure.query((req) => {
     return {
-      message: `welcome user!`,
+      message: "Welcome Message!",
     };
   }),
-  ...authRoutes,
 });
+
+export const appRouter = t.mergeRouters(publicRoutes, authRoutes);
 
 export type AppRouter = typeof appRouter;
