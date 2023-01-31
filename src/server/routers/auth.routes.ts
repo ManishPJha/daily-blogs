@@ -1,4 +1,8 @@
-import { procedure, router } from "@/server/trpc";
+import {
+  publicProcedure,
+  privateProcedure,
+  router,
+} from "@/server/createRoutes";
 import * as auth from "@/server/controllers/auth";
 
 import {
@@ -8,22 +12,22 @@ import {
   filterQuery,
 } from "@/server/controllers/auth/constants";
 
-export const authRoutes = {
-  register: procedure
+export const authRoutes = router({
+  register: publicProcedure
     .input(registerSchema)
     .mutation(({ input }) => auth.register({ input })),
-  update: procedure
+  update: privateProcedure
     .input(updateProfileSchema)
     .mutation(({ input }) =>
       auth.update({ param: input.params, input: input.body })
     ),
-  me: procedure
+  me: privateProcedure
     .input(params)
     .mutation(({ input }) => auth.profile({ param: input })),
-  findAll: procedure
+  findAll: publicProcedure
     .input(filterQuery)
     .mutation(({ input }) => auth.findAll({ filterQuery: input })),
-  remove: procedure
+  remove: privateProcedure
     .input(params)
     .mutation(({ input }) => auth.remove({ param: input })),
-};
+});

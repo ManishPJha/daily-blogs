@@ -1,7 +1,8 @@
 import { httpBatchLink, getFetch } from "@trpc/client";
 import { createTRPCNext } from "@trpc/next";
-import checkEnvironments from "@/utils/checkEnvironments";
 import superjson from "superjson";
+
+import checkEnvironments from "@/utils/checkEnvironments";
 import type { AppRouter } from "@/server/routers/_app";
 
 export const trpc = createTRPCNext<AppRouter>({

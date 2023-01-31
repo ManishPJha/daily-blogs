@@ -1,5 +1,5 @@
 import { TRPCError } from "@trpc/server";
-import { Prisma, PrismaClient } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 import {
   RegisterInputs,
   UpdateProfileInputs,
@@ -7,7 +7,7 @@ import {
   ParamsInput,
 } from "@/server/controllers/auth/constants";
 
-const prisma = new PrismaClient();
+import { prisma } from "@/utils/prisma";
 
 /**
  *
@@ -31,11 +31,9 @@ export const register = async ({ input }: { input: RegisterInputs }) => {
 
     const user = await prisma.user.create({
       data: {
-        firstName: input.firstName,
-        lastName: input.lastName,
+        name: input.name,
         email: input.email,
         password: input.password,
-        address: input.address,
       },
     });
 
